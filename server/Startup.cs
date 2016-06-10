@@ -66,19 +66,6 @@ namespace Server
             // https://docs.asp.net/en/latest/fundamentals/static-files.html
             app.UseStaticFiles();
 
-            // Enable external authentication provider(s)
-            // https://docs.asp.net/en/latest/security/authentication/sociallogins.html
-            app.UseIdentity()
-
-                .UseFacebookAuthentication(new FacebookOptions
-                {
-                    AppId = Configuration["Authentication:Facebook:AppId"],
-                    AppSecret = Configuration["Authentication:Facebook:AppSecret"],
-                    Scope = { "email" },
-                    Fields = { "name", "email" },
-                    SaveTokens = true,
-                });
-
             // Configure ASP.NET MVC
             // https://docs.asp.net/en/latest/mvc/index.html
             app.UseMvc(routes =>
@@ -93,6 +80,7 @@ namespace Server
             var web = Path.GetFileName(cwd) == "server" ? "../public" : "public";
 
             var host = new WebHostBuilder()
+                .UseUrls("http://0.0.0.0:5000/")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseWebRoot(web)
                 .UseKestrel()
