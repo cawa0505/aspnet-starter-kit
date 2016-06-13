@@ -80,7 +80,7 @@ namespace Server
             var web = Path.GetFileName(cwd) == "server" ? "../public" : "public";
 
             var host = new WebHostBuilder()
-                .UseUrls("http://0.0.0.0:5000/")
+                .UseUrls("http://*:5000/")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseWebRoot(web)
                 .UseKestrel()

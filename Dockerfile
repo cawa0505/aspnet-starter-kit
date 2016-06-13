@@ -33,18 +33,20 @@ RUN curl -SL https://dotnetcli.blob.core.windows.net/dotnet/beta/Binaries/$DOTNE
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 
 # Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/app/server
 
-# Install app dependencies
+# Install node dependencies
+WORKDIR /usr/src/app
 COPY package.json /usr/src/app/
 RUN npm install --no-optional
 
+# Install dotnet dependencies
+WORKDIR /usr/src/app/server
+COPY server/project.json /usr/src/app/server/
+RUN ["dotnet","restore"]
+
 # Bundle app source
 COPY . /usr/src/app/
-
-WORKDIR /usr/src/app/server
-RUN ["dotnet","restore"]
 
 EXPOSE 5000
 CMD ["sh", "../start.sh"]
