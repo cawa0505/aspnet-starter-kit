@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+
+  app:
+    build: .
+    volumes:
+     - ./client/:/usr/src/app/client
+    ports:
+     - 5000:5000
+    command: sh ../start.dev.sh
+    
